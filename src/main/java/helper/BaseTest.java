@@ -1,6 +1,6 @@
 package helper;
 
-import java.awt.Desktop.Action;
+import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -34,7 +34,18 @@ public class BaseTest {
 	public void mouseHover(WebElement ele) {
 		Actions a = new Actions(driver);
 		a.moveToElement(ele).perform();
-		;
+	}
+
+	public void selectValueFromBootStrapDropdown(List<WebElement> list, String value) {
+		for (WebElement ele : list) {
+			String text = ele.getText();
+
+			if (text.equals(value)) {
+				clickOnElement(ele);
+				break;
+			}
+		}
+
 	}
 
 }
