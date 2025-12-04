@@ -1,8 +1,11 @@
 package helper;
 
+import java.awt.Desktop.Action;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 public class BaseTest {
@@ -26,6 +29,12 @@ public class BaseTest {
 	public void clearAndText(WebElement ele, String inputText) {
 		ele.clear();
 		ele.sendKeys(inputText);
+	}
+
+	public void mouseHover(WebElement ele) {
+		Actions a = new Actions(driver);
+		a.moveToElement(ele).perform();
+		;
 	}
 
 }
