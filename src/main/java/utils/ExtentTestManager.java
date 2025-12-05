@@ -3,25 +3,22 @@ package utils;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ExtentTestManager {
 
-	private static Map<Long, ExtentTest> extentTestMap = new HashMap<>();
-	private static ExtentReports extent = ExtentManager.getReporter(); // From your ExtentManager
+    private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+    private static ExtentReports extent = ExtentManager.getReporter();
 
-	public static synchronized ExtentTest getTest() {
-		return extentTestMap.get(Thread.currentThread().getId());
-	}
+    public static ExtentTest getTest() {
+        return test.get();
+    }
 
-	public static synchronized void startTest(String testName, String description) {
-		ExtentTest test = extent.createTest(testName, description);
-		extentTestMap.put(Thread.currentThread().getId(), test);
-	}
+    public static void startTest(String testName, String description) {
+        ExtentTest extentTest = extent.createTest(testName, description);
+        test.set(extentTest);
+    }
 
-	public static synchronized void endTest() {
-		extent.flush(); // writes logs to report
-		extentTestMap.remove(Thread.currentThread().getId());
-	}
+    public static void endTest() {
+        extent.flush(); // Write all logs to the report
+        test.remove();  // Remove the test from ThreadLocal
+    }
 }
