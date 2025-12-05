@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-
+import utils.Log;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -52,7 +52,7 @@ public class Base {
 			prop = new Properties();
 			prop.load(file);
 		} catch (IOException e) {
-			System.out.println("File not found");
+			Log.error("File Not Supported or Not Found");
 		}
 	}
 
@@ -75,6 +75,7 @@ public class Base {
 			option.addArguments("--disable-gpu");
 			option.addArguments("--no-sandbox");
 			option.addArguments("--disable-dev-shm-usage");
+			option.addArguments("--headless");
 			driver = new ChromeDriver(option);
 		} else if (browserName.equals("firefox")) {
 			FirefoxOptions option = new FirefoxOptions();
