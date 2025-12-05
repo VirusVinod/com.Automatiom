@@ -33,7 +33,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class BaseTest {
+public class Base {
 
 	public static Properties prop;
 	public static WebDriver driver;
@@ -82,32 +82,35 @@ public class BaseTest {
 		driver.quit();
 	}
 
-	public void selectValueFromVisibleText(WebElement ele, String text, String type) {
+	public void selectValueFromVisibleText(By locator, String text, String type) {
+		WebElement ele = driver.findElement(locator);
 		Select s = new Select(ele);
+
 		switch (type.toLowerCase()) {
-		case "visibleText":
+		case "visibletext":
 			s.selectByVisibleText(text);
 			break;
+
 		case "value":
 			s.selectByValue(text);
 			break;
+
 		case "index":
-			s.selectByIndex(Integer.parseInt(type));
+			s.selectByIndex(Integer.parseInt(text));
 			break;
 
 		default:
-			throw new IllegalArgumentException("Invalid select type");
+			throw new IllegalArgumentException("Invalid select type: " + type);
 		}
-
 	}
 
-	public void clickOnElement(WebElement ele) {
+	public void clickOnElement(By locator) {
 		try {
-			ele.click();
+			driver.findElement(locator).click();
 		} catch (Exception e) {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
-			js.executeScript("arguments[0].scrollIntoView(true)", ele);
-			js.executeScript("arguments[0].click()", ele);
+			js.executeScript("arguments[0].scrollIntoView(true)", locator);
+			js.executeScript("arguments[0].click()", waitForElement(locator, 15));
 		}
 	}
 
@@ -122,24 +125,33 @@ public class BaseTest {
 		return driver.findElement(locattor).getText();
 	}
 
-	public void clearAndText(WebElement ele, String inputText) {
+	public void clearAndText(By locator, String inputText) {
+		WebElement ele = driver.findElement(locator);
 		ele.clear();
 		ele.sendKeys(inputText);
 	}
 
-	public void mouseHover(WebElement ele) {
+	public void mouseHover(By locator) {
+		WebElement ele = driver.findElement(locator);
 		Actions a = new Actions(driver);
 		a.moveToElement(ele).perform();
 	}
 
-	public void selectValueFromBootStrapDropdown(List<WebElement> list, String value) {
+	public void selectValueFromBootStrapDropdown(By locator, String value) {
+		List<WebElement> list = driver.findElements(locator);
 		for (WebElement ele : list) {
-			String text = ele.getText();
-
-			if (text.equals(value)) {
-				clickOnElement(ele);
+			if (ele.getText().trim().equals(value)) {
+				ele.click();
 				break;
 			}
+		}
+	}
+
+	public boolean isDisplayed(By locator) {
+		try {
+			return driver.findElement(locator).isDisplayed();
+		} catch (Exception e) {
+			return false;
 		}
 	}
 
@@ -171,10 +183,14 @@ public class BaseTest {
 		FileHandler.copy(src, dest);
 	}
 
-	public WebElement waitForElement(WebElement ele, long timeout) {
+	public WebElement waitForElement(By locator, long timeout) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
-		return wait.until(ExpectedConditions.visibilityOf(ele));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
 
+	public WebElement waitForElement(By locator) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
 
 	public void switchWindow(String title) {
@@ -192,11 +208,10 @@ public class BaseTest {
 
 	}
 
-	public String getElementText(WebElement ele) {
+	public String getElementText(By locator) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOf(ele));
+		WebElement ele = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		return ele.getText();
-
 	}
 
 	public void softAssertEquals(Object actual, Object expected, String messgae) {
