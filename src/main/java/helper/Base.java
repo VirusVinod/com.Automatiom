@@ -31,6 +31,7 @@ import org.testng.asserts.SoftAssert;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Base {
@@ -52,12 +53,24 @@ public class Base {
 	}
 
 	@Before
+	public void beforeScenario(Scenario scenario) {
+		Setup();
+	}
+
 	public void Setup() {
 		String browserName = prop.getProperty("browser");
 		if (browserName.equals("chrome")) {
 			WebDriverManager.chromedriver().setup();
 			ChromeOptions option = new ChromeOptions();
 			option.addArguments("--incognito");
+			option.addArguments("--disable-notifications");
+			option.addArguments("--start-maximized");
+			option.addArguments("--disable-extensions");
+			option.addArguments("--ignore-certificate-errors");
+			option.addArguments("--disable-infobars");
+			option.addArguments("--disable-gpu");
+			option.addArguments("--no-sandbox");
+			option.addArguments("--disable-dev-shm-usage");
 			driver = new ChromeDriver(option);
 		} else if (browserName.equals("firefox")) {
 			FirefoxOptions option = new FirefoxOptions();
@@ -83,11 +96,13 @@ public class Base {
 	}
 
 	public void selectValueFromVisibleText(By locator, String text, String type) {
-		WebElement ele = driver.findElement(locator);
+		WebElement ele = waitForElement(locator, 10);
 		Select s = new Select(ele);
 
-		switch (type.toLowerCase()) {
+		switch (type.toLowerCase().trim()) {
 		case "visibletext":
+		case "visible":
+		case "text":
 			s.selectByVisibleText(text);
 			break;
 
@@ -96,11 +111,15 @@ public class Base {
 			break;
 
 		case "index":
-			s.selectByIndex(Integer.parseInt(text));
+			try {
+				s.selectByIndex(Integer.parseInt(text));
+			} catch (NumberFormatException e) {
+				throw new IllegalArgumentException("Index must be a number. Provided: " + text);
+			}
 			break;
 
 		default:
-			throw new IllegalArgumentException("Invalid select type: " + type);
+			throw new IllegalArgumentException("Invalid select type: " + type + ". Use visibleText, value, or index.");
 		}
 	}
 
@@ -114,7 +133,7 @@ public class Base {
 		}
 	}
 
-	public void sendKeys(By locattor, String text) {
+	public void clearAndEnter(By locattor, String text) {
 		WebElement ele = driver.findElement(locattor);
 		ele.click();
 		ele.sendKeys(text);
@@ -145,6 +164,11 @@ public class Base {
 				break;
 			}
 		}
+	}
+
+	public void selectDropdownByVisibleText(By locator, String value) {
+		Select s = new Select(driver.findElement(locator));
+		s.selectByVisibleText(value);
 	}
 
 	public boolean isDisplayed(By locator) {
