@@ -27,12 +27,16 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.asserts.SoftAssert;
 
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import utils.ExtentManager;
+import utils.ExtentTestManager;
 
 public class Base {
 
@@ -91,8 +95,37 @@ public class Base {
 	}
 
 	@After
-	public void tearDown() {
-		driver.quit();
+	public void afterScenario(ITestResult result) {
+		try {
+			if (result.getStatus() == ITestResult.FAILURE) {
+				try {
+					// Take screenshot and get path
+					String path = takeScreenshot(result.getName());
+
+					// Attach screenshot to ExtentReport
+					ExtentTestManager.getTest().fail("Test Failed - Screenshot Attached")
+							.addScreenCaptureFromPath(path);
+
+				} catch (IOException e) {
+					e.printStackTrace();
+					ExtentTestManager.getTest().fail("Failed to capture screenshot: " + e.getMessage());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} finally {
+			ExtentTestManager.endTest();
+
+			if (driver != null) {
+				driver.quit();
+			}
+		}
+	}
+
+	@AfterAll
+	public static void afterAll() {
+		ExtentManager.getReporter().flush();
+		System.out.println("After all Scenario - flush report");
 	}
 
 	public void selectValueFromVisibleText(By locator, String text, String type) {
@@ -200,11 +233,13 @@ public class Base {
 
 	}
 
-	public void takeScreenshot1(String Ssname) throws IOException {
+	public String takeScreenshot(String Ssname) throws IOException {
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File src = ts.getScreenshotAs(OutputType.FILE);
-		File dest = new File(System.getProperty("user.dir") + "/Screenshot/" + Ssname + ".png");
+		String path = System.getProperty("user.dir") + "/Screenshot/" + Ssname + ".png";
+		File dest = new File(path);
 		FileHandler.copy(src, dest);
+		return path; // <-- return the path
 	}
 
 	public WebElement waitForElement(By locator, long timeout) {
