@@ -27,7 +27,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.ITestResult;
 import org.testng.asserts.SoftAssert;
 
 import io.cucumber.java.After;
@@ -57,7 +56,7 @@ public class Base {
 	}
 
 	@Before
-	public void beforeScenario(Scenario scenario) {
+	public void beforeScenario() {
 		Setup();
 	}
 
@@ -96,30 +95,20 @@ public class Base {
 	}
 
 	@After
-	public void afterScenario(ITestResult result) {
-		try {
-			if (result.getStatus() == ITestResult.FAILURE) {
-				try {
-					// Take screenshot and get path
-					String path = takeScreenshot(result.getName());
-
-					// Attach screenshot to ExtentReport
-					ExtentTestManager.getTest().fail("Test Failed - Screenshot Attached")
-							.addScreenCaptureFromPath(path);
-
-				} catch (IOException e) {
-					e.printStackTrace();
-					ExtentTestManager.getTest().fail("Failed to capture screenshot: " + e.getMessage());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	public void afterScenario(Scenario scenario) {
+		if (scenario.isFailed()) {
+			try {
+				String path = takeScreenshot(scenario.getName());
+				ExtentTestManager.getTest().fail("Test Failed - Screenshot Attached").addScreenCaptureFromPath(path);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} finally {
-			ExtentTestManager.endTest();
+		}
 
-			if (driver != null) {
-				driver.quit();
-			}
+		ExtentTestManager.endTest();
+
+		if (driver != null) {
+			driver.quit();
 		}
 	}
 
@@ -163,15 +152,15 @@ public class Base {
 		} catch (Exception e) {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			js.executeScript("arguments[0].scrollIntoView(true)", locator);
-			js.executeScript("arguments[0].click()", waitForElement(locator, 15));
+			js.executeScript("arguments[0].click()", waitForElement(locator, 20));
 		}
 	}
 
-	public void clearAndEnter(By locattor, String text) {
-		WebElement ele = driver.findElement(locattor);
+	public void clearAndEnter(By locator, String text) {
+		WebElement ele = driver.findElement(locator);
+		ele.clear();
 		ele.click();
 		ele.sendKeys(text);
-
 	}
 
 	public String getText(By locattor) {
