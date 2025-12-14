@@ -121,14 +121,16 @@ public class Base {
 		if (scenario.isFailed()) {
 			try {
 				String path = takeScreenshot(scenario.getName());
-				ExtentTestManager.getTest().fail("Test Failed - Screenshot Attached").addScreenCaptureFromPath(path);
+				ExtentTestManager.getTest(scenario.getId()).fail("Test Failed - Screenshot Attached")
+						.addScreenCaptureFromPath(path);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		ExtentTestManager.endTest();
+		ExtentManager.getReporter().flush();
 		if (driver != null) {
 			driver.quit();
+			driver = null;
 		}
 	}
 

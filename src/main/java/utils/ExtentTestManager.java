@@ -3,33 +3,35 @@ package utils;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExtentTestManager {
 
-    private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
-    private static ExtentReports extent = ExtentManager.getReporter();
+	private static ExtentReports extent = ExtentManager.getReporter();
 
-    // Keep track of scenarios already started
-    private static Set<String> startedScenarios = new HashSet<>();
+	// Map to store ExtentTest per scenario
+	private static Map<String, ExtentTest> testMap = new HashMap<>();
 
-    public static ExtentTest getTest() {
-        return test.get();
-    }
+	// Start test if not already started
+	public static synchronized void startTest(String testName, String scenarioId) {
+		if (!testMap.containsKey(scenarioId)) {
+			ExtentTest test = extent.createTest(testName);
+			testMap.put(scenarioId, test);
+		}
+	}
 
-    // Use scenarioId to prevent duplicates
-    public static synchronized void startTest(String testName, String scenarioId) {
-        if (startedScenarios.contains(scenarioId)) {
-            // Skip duplicate scenario
-            return;
-        }
-        ExtentTest extentTest = extent.createTest(testName);
-        test.set(extentTest);
-        startedScenarios.add(scenarioId);
-    }
+	// Get test by scenarioId
+	public static synchronized ExtentTest getTest(String scenarioId) {
+		return testMap.get(scenarioId);
+	}
 
-    public static void endTest() {
-        test.remove();
-    }
+	// Optional: remove test after scenario
+	public static synchronized void endTest(String scenarioId) {
+		testMap.remove(scenarioId);
+	}
+
+	public static void flushReports() {
+		extent.flush();
+	}
 }

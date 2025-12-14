@@ -28,4 +28,14 @@ public class LoginPageSteps {
 		login.validate_login_error_massage();
 	}
 
+	@When("user enter {string} \"")
+	public void user_enter(String string) {
+		login.user_enter("");
+	}
+
+	@Then("Verify the login error message for blank email and password fields.")
+	public void verify_the_login_error_message_for_blank_email_and_password_fields() {
+		login.verify_the_login_error_message_for_blank_email_and_password_fields();
+	}
+
 }

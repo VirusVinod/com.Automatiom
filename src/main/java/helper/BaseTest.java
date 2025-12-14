@@ -33,6 +33,7 @@ import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import utils.ExtentManager;
 import utils.ExtentTestManager;
 
 public class BaseTest {
@@ -57,7 +58,7 @@ public class BaseTest {
 	public void beforeScenario(Scenario scenario) {
 		Setup();
 		ExtentTestManager.startTest(scenario.getName(), scenario.getId());
-		
+
 	}
 
 	public void Setup() {
@@ -99,15 +100,19 @@ public class BaseTest {
 		if (scenario.isFailed()) {
 			try {
 				String path = takeScreenshot(scenario.getName());
-				ExtentTestManager.getTest().fail("Test Failed - Screenshot Attached").addScreenCaptureFromPath(path);
+				ExtentTestManager.getTest(scenario.getId()).fail("Test Failed - Screenshot Attached")
+						.addScreenCaptureFromPath(path);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		ExtentTestManager.endTest();
+		ExtentManager.getReporter().flush();
 		if (driver != null) {
 			driver.quit();
+			driver = null;
 		}
+
+		ExtentTestManager.flushReports();
 	}
 
 	@AfterAll
@@ -191,13 +196,13 @@ public class BaseTest {
 	}
 
 	public String takeScreenshot(String screenshotName) throws IOException {
-        TakesScreenshot ts = (TakesScreenshot) driver;
-        File src = ts.getScreenshotAs(OutputType.FILE);
-        String path = System.getProperty("user.dir") + "/Screenshot/" + screenshotName + ".png";
-        File dest = new File(path);
-        FileHandler.copy(src, dest);
-        return path;
-    }
+		TakesScreenshot ts = (TakesScreenshot) driver;
+		File src = ts.getScreenshotAs(OutputType.FILE);
+		String path = System.getProperty("user.dir") + "/Screenshot/" + screenshotName + ".png";
+		File dest = new File(path);
+		FileHandler.copy(src, dest);
+		return path;
+	}
 
 	public WebElement waitForElement(WebElement ele, long timeout) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
