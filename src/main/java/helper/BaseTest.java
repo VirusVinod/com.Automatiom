@@ -33,7 +33,6 @@ import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import utils.ExtentManager;
 import utils.ExtentTestManager;
 
 public class BaseTest {
@@ -57,7 +56,8 @@ public class BaseTest {
 	@Before
 	public void beforeScenario(Scenario scenario) {
 		Setup();
-		ExtentTestManager.startTest(scenario.getName(), scenario.getUri().toString());
+		ExtentTestManager.startTest(scenario.getName(), scenario.getId());
+		
 	}
 
 	public void Setup() {
@@ -112,7 +112,7 @@ public class BaseTest {
 
 	@AfterAll
 	public static void afterAll() {
-		ExtentManager.getReporter().flush();
+		utils.ExtentManager.getReporter().flush();
 	}
 
 	public void selectValueFromVisibleText(WebElement ele, String text, String type) {
@@ -190,14 +190,14 @@ public class BaseTest {
 
 	}
 
-	public String takeScreenshot(String Ssname) throws IOException {
-		TakesScreenshot ts = (TakesScreenshot) driver;
-		File src = ts.getScreenshotAs(OutputType.FILE);
-		String path = System.getProperty("user.dir") + "/Screenshot/" + Ssname + ".png";
-		File dest = new File(path);
-		FileHandler.copy(src, dest);
-		return path; // <-- return the path
-	}
+	public String takeScreenshot(String screenshotName) throws IOException {
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        File src = ts.getScreenshotAs(OutputType.FILE);
+        String path = System.getProperty("user.dir") + "/Screenshot/" + screenshotName + ".png";
+        File dest = new File(path);
+        FileHandler.copy(src, dest);
+        return path;
+    }
 
 	public WebElement waitForElement(WebElement ele, long timeout) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
