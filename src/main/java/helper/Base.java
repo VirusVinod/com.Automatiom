@@ -55,9 +55,14 @@ public class Base {
 		}
 	}
 
+//	@Before
+//	public void beforeScenario() {
+//		Setup();
+//	}
 	@Before
-	public void beforeScenario() {
+	public void beforeScenario(Scenario scenario) {
 		Setup();
+		ExtentTestManager.startTest(scenario.getName(), scenario.getUri().toString());
 	}
 
 	public void Setup() {
@@ -94,6 +99,23 @@ public class Base {
 
 	}
 
+//	@After
+//	public void afterScenario(Scenario scenario) {
+//		if (scenario.isFailed()) {
+//			try {
+//				String path = takeScreenshot(scenario.getName());
+//				ExtentTestManager.getTest().fail("Test Failed - Screenshot Attached").addScreenCaptureFromPath(path);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		ExtentTestManager.endTest();
+//
+//		if (driver != null) {
+//			driver.quit();
+//		}
+//	}
 	@After
 	public void afterScenario(Scenario scenario) {
 		if (scenario.isFailed()) {
@@ -104,18 +126,21 @@ public class Base {
 				e.printStackTrace();
 			}
 		}
-
 		ExtentTestManager.endTest();
-
 		if (driver != null) {
 			driver.quit();
 		}
 	}
 
+//	@AfterAll
+//	public static void afterAll() {
+//		ExtentManager.getReporter().flush();
+//		System.out.println("After all Scenario - flush report");
+//	}
+
 	@AfterAll
 	public static void afterAll() {
 		ExtentManager.getReporter().flush();
-		System.out.println("After all Scenario - flush report");
 	}
 
 	public void selectValueFromVisibleText(By locator, String text, String type) {
@@ -157,7 +182,7 @@ public class Base {
 	}
 
 	public void clearAndEnter(By locator, String text) {
-		WebElement ele = driver.findElement(locator);
+		WebElement ele = waitForElement(locator);
 		ele.clear();
 		ele.click();
 		ele.sendKeys(text);

@@ -15,7 +15,7 @@ public class HomePageStep {
 	}
 
 	@When("user search valid product {string}")
-	public void user_search_valid_product(String string) {
-		homepage.searchProduct(string);
+	public void user_search_valid_product(String productName) {
+		homepage.searchProduct(productName);
 	}
 }

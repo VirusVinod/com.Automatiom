@@ -18,8 +18,12 @@ public class ExtentManager {
 			extent.attachReporter(spark);
 
 			extent.setSystemInfo("OS", System.getProperty("os.name"));
+			extent.setSystemInfo("Project Name", "hafeleindia");
+			extent.setSystemInfo("Module / Feature", "All");
+			extent.setSystemInfo("Build / Release Version", "1.1");
+			extent.setSystemInfo("Test Cycle", "1.1");
 			extent.setSystemInfo("Environment", "QA");
-			extent.setSystemInfo("Tester", "QA Automation");
+			extent.setSystemInfo("Tester", "Vinod");
 		}
 		return extent;
 	}
