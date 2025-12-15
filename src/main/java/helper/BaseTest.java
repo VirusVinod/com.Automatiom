@@ -56,9 +56,30 @@ public class BaseTest {
 
 	@Before
 	public void beforeScenario(Scenario scenario) {
-		Setup();
-		ExtentTestManager.startTest(scenario.getName(), scenario.getId());
+	    ExtentTestManager.startTest(scenario.getName());
+	    Setup();
+	}
 
+	@After
+	public void afterScenario(Scenario scenario) {
+		if (scenario.isFailed()) {
+			try {
+				String path = takeScreenshot(scenario.getName());
+				ExtentTestManager.getTest(scenario.getName()).fail("Test Failed").addScreenCaptureFromPath(path);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		if (driver != null) {
+			driver.quit();
+			driver = null;
+		}
+	}
+
+	@AfterAll
+	public static void afterAll() {
+		ExtentManager.getReporter().flush();
 	}
 
 	public void Setup() {
@@ -93,31 +114,6 @@ public class BaseTest {
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Long.parseLong(prop.getProperty("timeouts"))));
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Long.parseLong(prop.getProperty("timeouts"))));
 
-	}
-
-	@After
-	public void afterScenario(Scenario scenario) {
-		if (scenario.isFailed()) {
-			try {
-				String path = takeScreenshot(scenario.getName());
-				ExtentTestManager.getTest(scenario.getId()).fail("Test Failed - Screenshot Attached")
-						.addScreenCaptureFromPath(path);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		ExtentManager.getReporter().flush();
-		if (driver != null) {
-			driver.quit();
-			driver = null;
-		}
-
-		ExtentTestManager.flushReports();
-	}
-
-	@AfterAll
-	public static void afterAll() {
-		utils.ExtentManager.getReporter().flush();
 	}
 
 	public void selectValueFromVisibleText(WebElement ele, String text, String type) {

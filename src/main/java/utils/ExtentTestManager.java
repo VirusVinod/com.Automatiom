@@ -14,10 +14,10 @@ public class ExtentTestManager {
 	private static Map<String, ExtentTest> testMap = new HashMap<>();
 
 	// Start test if not already started
-	public static synchronized void startTest(String testName, String scenarioId) {
-		if (!testMap.containsKey(scenarioId)) {
+	public static synchronized void startTest(String testName) {
+		if (!testMap.containsKey(testName)) {
 			ExtentTest test = extent.createTest(testName);
-			testMap.put(scenarioId, test);
+			testMap.put(testName, test);
 		}
 	}
 

@@ -59,11 +59,11 @@ public class Base {
 //	public void beforeScenario() {
 //		Setup();
 //	}
-	@Before
-	public void beforeScenario(Scenario scenario) {
-		Setup();
-		ExtentTestManager.startTest(scenario.getName(), scenario.getUri().toString());
-	}
+//	@Before
+//	public void beforeScenario(Scenario scenario) {
+//		Setup();
+//		ExtentTestManager.startTest(scenario.getName(), scenario.getUri().toString());
+//	}
 
 	public void Setup() {
 		String browserName = prop.getProperty("browser");
