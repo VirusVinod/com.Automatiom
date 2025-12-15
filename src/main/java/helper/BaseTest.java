@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Set;
 
@@ -56,8 +57,8 @@ public class BaseTest {
 
 	@Before
 	public void beforeScenario(Scenario scenario) {
-	    ExtentTestManager.startTest(scenario.getName());
-	    Setup();
+		ExtentTestManager.startTest(scenario.getName());
+		Setup();
 	}
 
 	@After
@@ -252,6 +253,30 @@ public class BaseTest {
 	public void hardAssertTrue(boolean condition, String messgae) {
 		Assert.assertTrue(condition, messgae);
 
+	}
+
+	public void listOfElementsClickByText(List<WebElement> ele, String expectedText) {
+
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+
+		for (WebElement element : ele) {
+			String actualText = element.getText().trim();
+
+			if (actualText.contains(expectedText)) {
+				try {
+					wait.until(ExpectedConditions.elementToBeClickable(element));
+					element.click();
+				} catch (Exception e) {
+					js.executeScript("arguments[0].scrollIntoView(true);", element);
+					js.executeScript("arguments[0].click();", element);
+				}
+				return;
+			}
+		}
+
+		throw new NoSuchElementException(
+				"Element containing text '" + expectedText + "' not found in given WebElement list");
 	}
 
 }
