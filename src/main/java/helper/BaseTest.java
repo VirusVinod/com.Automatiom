@@ -41,7 +41,7 @@ public class BaseTest {
 
 	public static Properties prop;
 	public static WebDriver driver;
-	static long timeout = 10;
+	static long timeout = 15;
 	SoftAssert soft = new SoftAssert();
 
 	static {

@@ -1,5 +1,6 @@
 package stepDefination;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import page.LoginPage;
@@ -36,6 +37,16 @@ public class LoginPageSteps {
 	@Then("Verify the login error message for blank email and password fields.")
 	public void verify_the_login_error_message_for_blank_email_and_password_fields() {
 		login.verify_the_login_error_message_for_blank_email_and_password_fields();
+	}
+
+	@And("add a product add to cart")
+	public void add_a_product_add_to_cart() {
+		login.add_a_product_add_to_cart();
+	}
+
+	@Then("Validate shopping cart badge")
+	public void validate_shopping_cart_badge() {
+		login.validate_shopping_cart_badge();
 	}
 
 }

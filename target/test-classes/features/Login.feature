@@ -21,3 +21,10 @@ Feature: Login Functionality
     When user enter "  and " "
     And user click on login button
     Then Verify the login error message for blank email and password fields.
+    
+@Reg
+  Scenario: Product add to cart
+    When user enter "standard_user" and "secret_sauce"
+    And user click on login button
+    And add a product add to cart
+    Then Validate shopping cart badge

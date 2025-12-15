@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Default test</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>4/0/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>4/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Mon Dec 15 13:23:16 IST 2025</td>
+<td>Started on:</td><td>Mon Dec 15 17:33:12 IST 2025</td>
 </tr>
-<tr><td>Total time:</td><td>8 seconds (8892 ms)</td>
+<tr><td>Total time:</td><td>14 seconds (14249 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -67,6 +67,31 @@ function toggleAllBoxes() {
 </tr>
 </table><p/>
 <small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td><b>Attribute(s)</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Product add to cart", "Login Functionality"</td>
+<td><div><pre>java.util.NoSuchElementException: Element containing text &apos;Sauce Labs Bolt T-Shirt&apos; not found in given WebElement list
+	at helper.BaseTest.listOfElementsClickByText(BaseTest.java:278)
+	at page.LoginPage.add_a_product_add_to_cart(LoginPage.java:61)
+	at stepDefination.LoginPageSteps.add_a_product_add_to_cart(LoginPageSteps.java:44)
+	at ✽.add a product add to cart(file:///D:/Automation/.metadata/com.Automation/com.Automatiom/src/test/java/features/Login.feature:29)
+</pre></div><a href='#' onClick='toggleBox("stack-trace1073564434", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1073564434'><pre>java.util.NoSuchElementException: Element containing text &apos;Sauce Labs Bolt T-Shirt&apos; not found in given WebElement list
+	at helper.BaseTest.listOfElementsClickByText(BaseTest.java:278)
+	at page.LoginPage.add_a_product_add_to_cart(LoginPage.java:61)
+	at stepDefination.LoginPageSteps.add_a_product_add_to_cart(LoginPageSteps.java:44)
+	at ✽.add a product add to cart(file:///D:/Automation/.metadata/com.Automation/com.Automatiom/src/test/java/features/Login.feature:29)
+</pre></div></td>
+<td>2</td>
+<td>runner.TestRunner@31c7528f</td></tr>
+</table><p>
 <table width='100%' border='1' class='invocation-passed'>
 <tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
 <tr><td><b>Test method</b></td>
@@ -76,22 +101,22 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Login With Blank Emild and  password", "Login Functionality"</td>
-<td></td>
-<td>1</td>
-<td>runner.TestRunner@31c7528f</td></tr>
-<tr>
 <td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Login With Invalid Emild and Valid password", "Login Functionality"</td>
-<td></td>
-<td>1</td>
-<td>runner.TestRunner@31c7528f</td></tr>
-<tr>
-<td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Login With Valid Credenatials", "Login Functionality"</td>
 <td></td>
 <td>2</td>
 <td>runner.TestRunner@31c7528f</td></tr>
 <tr>
 <td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Login With Valid Emild and Invalid password", "Login Functionality"</td>
+<td></td>
+<td>2</td>
+<td>runner.TestRunner@31c7528f</td></tr>
+<tr>
+<td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Login With Valid Credenatials", "Login Functionality"</td>
+<td></td>
+<td>3</td>
+<td>runner.TestRunner@31c7528f</td></tr>
+<tr>
+<td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Login With Blank Emild and  password", "Login Functionality"</td>
 <td></td>
 <td>2</td>
 <td>runner.TestRunner@31c7528f</td></tr>
