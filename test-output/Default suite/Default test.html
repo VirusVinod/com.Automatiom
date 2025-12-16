@@ -57,9 +57,9 @@ function toggleAllBoxes() {
 <tr>
 <td>Tests passed/Failed/Skipped:</td><td>4/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Mon Dec 15 17:33:12 IST 2025</td>
+<td>Started on:</td><td>Mon Dec 15 22:01:13 IST 2025</td>
 </tr>
-<tr><td>Total time:</td><td>14 seconds (14249 ms)</td>
+<tr><td>Total time:</td><td>40 seconds (40126 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -77,19 +77,61 @@ function toggleAllBoxes() {
 </tr>
 <tr>
 <td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Product add to cart", "Login Functionality"</td>
-<td><div><pre>java.util.NoSuchElementException: Element containing text &apos;Sauce Labs Bolt T-Shirt&apos; not found in given WebElement list
-	at helper.BaseTest.listOfElementsClickByText(BaseTest.java:278)
-	at page.LoginPage.add_a_product_add_to_cart(LoginPage.java:61)
-	at stepDefination.LoginPageSteps.add_a_product_add_to_cart(LoginPageSteps.java:44)
-	at ✽.add a product add to cart(file:///D:/Automation/.metadata/com.Automation/com.Automatiom/src/test/java/features/Login.feature:29)
-</pre></div><a href='#' onClick='toggleBox("stack-trace1073564434", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1073564434'><pre>java.util.NoSuchElementException: Element containing text &apos;Sauce Labs Bolt T-Shirt&apos; not found in given WebElement list
-	at helper.BaseTest.listOfElementsClickByText(BaseTest.java:278)
-	at page.LoginPage.add_a_product_add_to_cart(LoginPage.java:61)
-	at stepDefination.LoginPageSteps.add_a_product_add_to_cart(LoginPageSteps.java:44)
-	at ✽.add a product add to cart(file:///D:/Automation/.metadata/com.Automation/com.Automatiom/src/test/java/features/Login.feature:29)
+<td><div><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//div[@id=&apos;shopping_cart_container&apos;]//a//span&quot;}
+  (Session info: chrome=143.0.7499.40)
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Build info: version: &apos;4.39.0&apos;, revision: &apos;126f156aee&apos;
+System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;23.0.2&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [25e6981ca18001b454ebfb1a18bd4568, findElement {using=xpath, value=//div[@id=&apos;shopping_cart_container&apos;]//a//span}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 143.0.7499.40, chrome: {chromedriverVersion: 143.0.7499.42 (24bdc8c48a0c..., userDataDir: C:\Users\Admin\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:51839}, goog:processID: 19448, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:51839/devtoo..., se:cdpVersion: 143.0.7499.40, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 25e6981ca18001b454ebfb1a18bd4568
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:501)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:485)
+	at org.openqa.selenium.remote.ErrorCodec.decode(ErrorCodec.java:167)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:142)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:215)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:216)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:174)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:561)
+	at org.openqa.selenium.remote.ElementLocation$ElementFinder$2.findElement(ElementLocation.java:166)
+	at org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:60)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:384)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:378)
+	at page.LoginPage.validate_shopping_cart_badge(LoginPage.java:65)
+	at stepDefination.LoginPageSteps.validate_shopping_cart_badge(LoginPageSteps.java:49)
+	at ✽.Validate shopping cart badge(file:///D:/Automation/.metadata/com.Automation/com.Automatiom/src/test/java/features/Login.feature:30)
+</pre></div><a href='#' onClick='toggleBox("stack-trace1977656652", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1977656652'><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//div[@id=&apos;shopping_cart_container&apos;]//a//span&quot;}
+  (Session info: chrome=143.0.7499.40)
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Build info: version: &apos;4.39.0&apos;, revision: &apos;126f156aee&apos;
+System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;23.0.2&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [25e6981ca18001b454ebfb1a18bd4568, findElement {using=xpath, value=//div[@id=&apos;shopping_cart_container&apos;]//a//span}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 143.0.7499.40, chrome: {chromedriverVersion: 143.0.7499.42 (24bdc8c48a0c..., userDataDir: C:\Users\Admin\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:51839}, goog:processID: 19448, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:51839/devtoo..., se:cdpVersion: 143.0.7499.40, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 25e6981ca18001b454ebfb1a18bd4568
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:501)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:485)
+	at org.openqa.selenium.remote.ErrorCodec.decode(ErrorCodec.java:167)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:142)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:215)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:216)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:174)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:561)
+	at org.openqa.selenium.remote.ElementLocation$ElementFinder$2.findElement(ElementLocation.java:166)
+	at org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:60)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:384)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:378)
+	at page.LoginPage.validate_shopping_cart_badge(LoginPage.java:65)
+	at stepDefination.LoginPageSteps.validate_shopping_cart_badge(LoginPageSteps.java:49)
+	at ✽.Validate shopping cart badge(file:///D:/Automation/.metadata/com.Automation/com.Automatiom/src/test/java/features/Login.feature:30)
 </pre></div></td>
-<td>2</td>
+<td>23</td>
 <td>runner.TestRunner@31c7528f</td></tr>
 </table><p>
 <table width='100%' border='1' class='invocation-passed'>
@@ -106,17 +148,17 @@ function toggleAllBoxes() {
 <td>2</td>
 <td>runner.TestRunner@31c7528f</td></tr>
 <tr>
-<td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Login With Valid Emild and Invalid password", "Login Functionality"</td>
-<td></td>
-<td>2</td>
-<td>runner.TestRunner@31c7528f</td></tr>
-<tr>
 <td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Login With Valid Credenatials", "Login Functionality"</td>
 <td></td>
-<td>3</td>
+<td>6</td>
 <td>runner.TestRunner@31c7528f</td></tr>
 <tr>
 <td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Login With Blank Emild and  password", "Login Functionality"</td>
+<td></td>
+<td>5</td>
+<td>runner.TestRunner@31c7528f</td></tr>
+<tr>
+<td title='runner.TestRunner.runScenario()'><b>runScenario</b><br>Test class: runner.TestRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Login With Valid Emild and Invalid password", "Login Functionality"</td>
 <td></td>
 <td>2</td>
 <td>runner.TestRunner@31c7528f</td></tr>

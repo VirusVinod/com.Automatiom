@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Set;
 
@@ -256,27 +255,13 @@ public class BaseTest {
 	}
 
 	public void listOfElementsClickByText(List<WebElement> ele, String expectedText) {
-
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
-
 		for (WebElement element : ele) {
 			String actualText = element.getText().trim();
 
 			if (actualText.contains(expectedText)) {
-				try {
-					wait.until(ExpectedConditions.elementToBeClickable(element));
-					element.click();
-				} catch (Exception e) {
-					js.executeScript("arguments[0].scrollIntoView(true);", element);
-					js.executeScript("arguments[0].click();", element);
-				}
+				clickOnElement(element);
 				return;
 			}
 		}
-
-		throw new NoSuchElementException(
-				"Element containing text '" + expectedText + "' not found in given WebElement list");
 	}
-
 }

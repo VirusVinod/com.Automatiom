@@ -22,7 +22,7 @@ Feature: Login Functionality
     And user click on login button
     Then Verify the login error message for blank email and password fields.
     
-@Reg
+@Reg @Smoke
   Scenario: Product add to cart
     When user enter "standard_user" and "secret_sauce"
     And user click on login button
